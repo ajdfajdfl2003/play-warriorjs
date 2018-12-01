@@ -1,7 +1,7 @@
 class Player {
 
   constructor(){
-    this.hp_max = 12;
+    this.hp_max = 13;
     this.hp = this.hp_max;
   }
 
@@ -10,24 +10,29 @@ class Player {
 
     const space = warrior.feel();
 
-    if(this.shouldAttack(space)){
+    if(this.shouldRescue(space)) {
+
+      warrior.rescue();
+
+    }else if(this.shouldRest(warrior)){
+
+        warrior.rest();
+        
+    }else if(this.shouldAttack(space)){
 
       warrior.attack();
 
     }else {
 
-      if(this.shouldRest(warrior)){
-
-        warrior.rest();
-        
-      }else {
-
         warrior.walk();
 
-      }
     }
 
     this.hp = warrior.health();
+  }
+
+  shouldRescue(space) {
+    return space.isCaptive();
   }
 
   shouldRest(warrior) {
